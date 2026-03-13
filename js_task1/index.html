@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Document</title>
+    </head>
+    <body>
+        <img style="display: none" src="#" width="500" height="500" />
+        <p style="font-size: 50px; display: block">Loading...</p>
+        <button onclick="getRandomImage()">Refetch</button>
+        <!-- Async Await -->
+        <script>
+            const img = document.querySelector("img");
+            const loader = document.querySelector("p");
+            async function getRandomImage() {
+                try {
+                    loader.style.display = "block";
+                    img.style.display = "none";
+                    const request = await fetch(
+                        "https://dog.ceo/api/breeds/image/random",
+                    );
+                    const respose = await request.json();
+                    img.src = respose.message;
+                    setTimeout(() => {
+                        loader.style.display = "none";
+                        img.style.display = "block";
+                    }, [500]);
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+            getRandomImage();
+        </script>
+        <!-- promise based code -->
+        <!-- <script>
+            const img = document.querySelector("img");
+            fetch("https://dog.ceo/api/breeds/image/random")
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.log(data);
+                    img.src = data.message;
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        </script> -->
+    </body>
+</html>
